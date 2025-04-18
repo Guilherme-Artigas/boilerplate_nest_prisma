@@ -70,7 +70,7 @@ export class UploadService {
     return Promise.all(uploadPromises);
   }
 
-  async getFileById(id: number): Promise<File> {
+  async getFileById(id: string): Promise<File> {
     const file: File | null = await this.prisma.file.findFirst({ where: { id } });
 
     if (!file) throw new NotFoundException('Arquivo não encontrado.');
@@ -98,7 +98,7 @@ export class UploadService {
     return userUpdated;
   }
 
-  async deleteFileById(id: number): Promise<{ message: string }> {
+  async deleteFileById(id: string): Promise<{ message: string }> {
     const file = await this.getFileById(id);
 
     const deleteParams: DeleteObjectCommandInput = {
@@ -124,7 +124,7 @@ export class UploadService {
     return user;
   }
 
-  private async getUserById(id: number): Promise<ResponseDeleteOneFileDto> {
+  private async getUserById(id: string): Promise<ResponseDeleteOneFileDto> {
     const user: Partial<User> | null = await this.prisma.user.findFirst({
       where: { id },
       select: { id: true, name: true, fileUrl: true, fileKey: true },

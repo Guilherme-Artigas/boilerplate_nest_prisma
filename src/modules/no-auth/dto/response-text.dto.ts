@@ -3,7 +3,7 @@ import { TextType } from '@prisma/client';
 
 export class ResponseTextDto {
   @ApiProperty()
-  id: number;
+  id: string;
 
   @ApiProperty({ enum: TextType })
   type: TextType;

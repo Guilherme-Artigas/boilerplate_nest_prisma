@@ -97,7 +97,7 @@ export class NoAuthService {
     });
   }
 
-  mySelf(id: number) {
+  mySelf(id: string) {
     return this.prisma.user.findFirst({
       where: { id },
       select: {

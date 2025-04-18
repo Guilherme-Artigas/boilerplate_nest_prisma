@@ -10,6 +10,8 @@ export async function seedUser(prisma: PrismaClient) {
         password: hashSync('12345678', 10),
         role: Role.User,
         status: Status.Active,
+        document: '0987654321',
+        phone: '0987654321',
       },
     ],
   });

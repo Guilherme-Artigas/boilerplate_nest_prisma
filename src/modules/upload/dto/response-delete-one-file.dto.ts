@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class ResponseDeleteOneFileDto {
   @ApiProperty()
-  id?: number;
+  id?: string;
   @ApiProperty()
   name?: string;
   @ApiProperty()

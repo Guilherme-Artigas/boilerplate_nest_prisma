@@ -1,38 +1,38 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { AdminPermission } from '@prisma/client';
+import { UserAdminPermissionsDto } from './user-admin-permissions.dto';
 
 export class CreateAdminAloneDto {
-  @ApiProperty()
-  id?: number;
+  @ApiProperty({ example: '6801b95433b91ea78ce04996' })
+  id?: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'Hugo Silva' })
   name?: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'hugo.admin@email.com' })
   email?: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: '016.817.078-70' })
   document?: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: '11 999999999' })
   phone?: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'Admin' })
   role?: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'Ativo' })
   status?: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'https://example.com/image.jpg' })
   fileUrl?: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'image.jpg' })
   fileKey?: string;
 
-  @ApiProperty()
-  adminPermissions?: AdminPermission[];
+  @ApiProperty({ type: [UserAdminPermissionsDto] })
+  userPermissions?: UserAdminPermissionsDto[];
 
-  @ApiProperty()
+  @ApiProperty({ example: '2024-01-01T00:00:00.000Z' })
   createdAt?: Date;
 
   @ApiProperty()

@@ -18,12 +18,14 @@ class HandleAccessControl {
 
     const user = await this.prisma.user.findFirst({
       where: { id },
-      include: { adminPermissions: true },
+      include: { userPermissions: { include: { permission: true } } },
     });
 
     if (!user) throw new NotFoundException('Usuário não encontrado.');
 
-    const validPermission: boolean = user.adminPermissions.some(({ name }) => name === permission);
+    const validPermission: boolean = user.userPermissions.some(
+      ({ permission: { name } }) => name === permission,
+    );
 
     if (!validPermission) throw new ForbiddenException('Acesso não autorizado.');
   }

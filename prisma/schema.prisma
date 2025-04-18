@@ -3,47 +3,60 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id               Int               @id @default(autoincrement())
-  name             String
-  email            String            @unique
-  document         String?           @unique @db.VarChar(18)
-  phone            String?           @unique
-  password         String
-  code             String?           @db.VarChar(4)
-  codeExpiresIn    DateTime?
-  role             Role              @default(User)
-  status           Status            @default(Pending)
-  fileUrl          String?           @db.VarChar(1500)
-  fileKey          String?           @db.VarChar(1500)
-  createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
-  adminPermissions AdminPermission[]
-  files            File[]
+  id              String           @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  email           String           @unique
+  document        String           @unique
+  phone           String           @unique
+  password        String
+  code            String?
+  codeExpiresIn   DateTime?
+  role            Role             @default(User)
+  status          Status           @default(Pending)
+  fileUrl         String?
+  fileKey         String?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  userPermissions UserPermission[]
+  files           File[]
 
   @@map("users")
 }
 
 model AdminPermission {
-  id        Int              @id @default(autoincrement())
-  name      AdminPermissions @unique()
-  createdAt DateTime         @default(now())
-  updatedAt DateTime         @updatedAt
-  admin     User[]
+  id              String           @id @default(auto()) @map("_id") @db.ObjectId
+  name            AdminPermissions @unique()
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  userPermissions UserPermission[]
 
   @@map("admin_permissions")
 }
 
+model UserPermission {
+  id           String          @id @default(auto()) @map("_id") @db.ObjectId
+  user         User            @relation(fields: [userId], references: [id])
+  userId       String          @db.ObjectId
+  permission   AdminPermission @relation(fields: [permissionId], references: [id])
+  permissionId String          @db.ObjectId
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  @@unique([userId, permissionId])
+  @@map("user_permissions")
+}
+
 model File {
-  id        Int      @id @default(autoincrement())
-  fileUrl   String?  @db.VarChar(1500)
-  fileKey   String?  @db.VarChar(1500)
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  fileUrl   String?
+  fileKey   String?
   user      User     @relation(fields: [userId], references: [id])
-  userId    Int
+  userId    String   @db.ObjectId
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -51,9 +64,9 @@ model File {
 }
 
 model Text {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   type      TextType
-  text      String   @db.LongText()
+  text      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { Status, User } from '@prisma/client';
+import { AdminPermission, Prisma, Status, User } from '@prisma/client';
 import { compareSync } from 'bcrypt';
 import { LoginService } from '../login/login.service';
 import { UserPayload } from './models/UserPayload';
@@ -20,9 +20,23 @@ export class AuthService {
     };
 
     const token: string = this.jwtService.sign(payload);
-    const user = await this.loginService.findByEmail(userArg.email);
+    const include = {
+      userPermissions: {
+        include: {
+          permission: true,
+        },
+      },
+    } satisfies Prisma.UserInclude;
 
-    return { token, id: user.id, role: user.role, adminPermissions: user.adminPermissions };
+    const user = await this.loginService.findByEmail(userArg.email, include);
+    const permissions = user.userPermissions.map((up) => up['permission']) as AdminPermission[];
+
+    return {
+      token,
+      id: user.id,
+      role: user.role,
+      adminPermissions: permissions,
+    };
   }
 
   async validateUser(email: string, password: string): Promise<User> {

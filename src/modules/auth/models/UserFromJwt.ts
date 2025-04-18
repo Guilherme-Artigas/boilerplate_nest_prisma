@@ -1,4 +1,4 @@
 export interface UserFromJwt {
-  id: number;
+  id: string;
   role: string;
 }

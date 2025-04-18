@@ -11,14 +11,22 @@ export async function seedAdmin(prisma: PrismaClient) {
       password: hashSync('12345678', 10),
       role: Role.Master,
       status: Status.Active,
+      document: '1234567890',
+      phone: '1234567890',
     },
   });
 
   for (const permission of permissions) {
-    await prisma.adminPermission.create({
+    const adminPermission = await prisma.adminPermission.create({
       data: {
         name: permission,
-        admin: { connect: { id: newMaster.id } },
+      },
+    });
+
+    await prisma.userPermission.create({
+      data: {
+        userId: newMaster.id,
+        permissionId: adminPermission.id,
       },
     });
   }

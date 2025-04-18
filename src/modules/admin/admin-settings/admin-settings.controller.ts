@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Query } from '@nestjs/common';
 
 import {
   ApiBadRequestResponse,
@@ -81,7 +81,7 @@ export class AdminSettingsController {
   @ApiUnauthorizedResponse({ description: 'Acesso não autorizado.' })
   @ApiForbiddenResponse({ description: 'Acesso não autorizado.' })
   @ApiInternalServerErrorResponse({ description: 'Erro interno no servidor.' })
-  async findById(@CurrentUser() user: User, @Param('id', ParseIntPipe) id: number) {
+  async findById(@CurrentUser() user: User, @Param('id') id: string) {
     handleAccessControl.verifyAdminRole(user);
 
     await handleAccessControl.verifyPermission(user, 'Settings');
@@ -96,11 +96,7 @@ export class AdminSettingsController {
   @ApiUnauthorizedResponse({ description: 'Token inválido.' })
   @ApiForbiddenResponse({ description: 'Acesso não autorizado.' })
   @ApiInternalServerErrorResponse({ description: 'Erro interno no servidor.' })
-  async update(
-    @CurrentUser() user: User,
-    @Param('id', ParseIntPipe) id: number,
-    @Body() body: UpdateAdminDto,
-  ) {
+  async update(@CurrentUser() user: User, @Param('id') id: string, @Body() body: UpdateAdminDto) {
     handleAccessControl.verifyAdminRole(user);
 
     await handleAccessControl.verifyPermission(user, 'Settings');

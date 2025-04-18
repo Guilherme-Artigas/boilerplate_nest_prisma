@@ -9,7 +9,6 @@ import {
   NotFoundException,
   Param,
   ParseFilePipeBuilder,
-  ParseIntPipe,
   Post,
   Query,
   Res,
@@ -37,7 +36,7 @@ import { ResponseOneFileDto } from './dto/response-one-file.dto';
 import { UploadService } from './upload.service';
 
 @ApiTags('Upload de arquivos')
-@Controller()
+@Controller('upload')
 export class UploadController {
   constructor(
     private readonly _uploadService: UploadService,
@@ -105,7 +104,7 @@ export class UploadController {
   @Get('one-file/:id')
   @ApiOperation({ summary: 'Rota para recuperar informações de um arquivo pelo id.' })
   @ApiResponse({ status: 200, type: IfileEntity })
-  async getFileById(@Param('id', ParseIntPipe) id: number) {
+  async getFileById(@Param('id') id: string) {
     return this._uploadService.getFileById(id);
   }
 
@@ -121,7 +120,7 @@ export class UploadController {
     status: 404,
     description: 'Arquivo não encontrado.',
   })
-  async dowload(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
+  async dowload(@Param('id') id: string, @Res() res: Response) {
     const file = await this.getFileById(id);
 
     const s3Client = new S3Client({ region: this._configService.get<string>('AWS_REGION') });
@@ -163,7 +162,7 @@ export class UploadController {
   @Delete('one-file/:id')
   @ApiOperation({ summary: 'Rota para deletar um arquivo pelo seu id.' })
   @ApiResponse({ status: 200, type: ImessageEntity })
-  async deleteFileById(@Param('id', ParseIntPipe) id: number) {
+  async deleteFileById(@Param('id') id: string) {
     return this._uploadService.deleteFileById(id);
   }
 }

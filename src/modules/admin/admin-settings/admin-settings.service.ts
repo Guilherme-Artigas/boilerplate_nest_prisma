@@ -4,8 +4,8 @@ import { PrismaService } from '@database/PrismaService';
 import { AdminPermission, Role, Status, User } from '@prisma/client';
 import capitalizeFirstLetter from '@utils/capitalizeFirstLetter';
 import { checkExistingUser } from '@utils/checkExistingUser';
-import HandleUpdatePermission from '@utils/HandleUpdatePermission';
-import HandleUpdateUser from '@utils/HandleUpdateUser';
+import handleUpdatePermission from '@utils/HandleUpdatePermission';
+import handleUpdateUser from '@utils/HandleUpdateUser';
 import { hashSync } from 'bcrypt';
 import { CreateAdminResponseDto } from './dto/create-admin-response.dto';
 import { CreateAdminDto } from './dto/create-admin.dto';
@@ -39,7 +39,10 @@ export class AdminSettingsService {
     });
 
     const user: Partial<User> = await this._prisma.user.create({
-      data: { ...validNewAdmin, adminPermissions: { connect: permissionsFound } },
+      data: {
+        ...validNewAdmin,
+        userPermissions: { create: permissionsFound.map((p) => ({ permissionId: p.id })) },
+      },
     });
 
     return { message: 'Admin cadastrado com sucesso.', admin: await this.findById(user.id) };
@@ -50,45 +53,56 @@ export class AdminSettingsService {
   }
 
   async findAll(query: QueryAdminDto): Promise<ResponseFindAllAdminDto> {
-    const { name, status, take, skip } = query;
+    const { name, status, take = 10, skip = 1 } = query;
 
-    const admins: Partial<User>[] = await this._prisma.user.findMany({
-      where: {
-        OR: [{ role: Role.Master }, { role: Role.Admin }],
-        name: { contains: name },
-        status,
-      },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        document: true,
-        phone: true,
-        role: true,
-        status: true,
-        fileUrl: true,
-        fileKey: true,
-        createdAt: true,
-        updatedAt: true,
-      },
-      take: Number(take) || 10,
-      skip: (Number(skip) - 1) * Number(take) || 0,
-    });
+    const pageSize = Number(take) || 10;
+    const currentPage = Number(skip) || 1;
 
-    const count: number = await this._prisma.user.count({
-      where: {
-        OR: [{ role: Role.Master }, { role: Role.Admin }],
-        name: { contains: name },
-        status,
-      },
-    });
+    const offset = (currentPage - 1) * pageSize;
 
-    const pages: number = skip ? Math.ceil(count / take) : 1;
+    const [admins, total] = await Promise.all([
+      this._prisma.user.findMany({
+        where: {
+          OR: [{ role: Role.Master }, { role: Role.Admin }],
+          AND: [{ name: { contains: name } }, { status: { equals: status } }],
+        },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          document: true,
+          phone: true,
+          role: true,
+          status: true,
+          fileUrl: true,
+          fileKey: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+        take: pageSize,
+        skip: offset,
+        orderBy: { createdAt: 'desc' },
+      }),
+      this._prisma.user.count({
+        where: {
+          OR: [{ role: Role.Master }, { role: Role.Admin }],
+          AND: [{ name: { contains: name } }, { status: { equals: status } }],
+        },
+      }),
+    ]);
 
-    return { admins, pages, count };
+    const totalPages = Math.ceil(total / pageSize);
+
+    return {
+      admins,
+      pages: totalPages,
+      count: total,
+      currentPage,
+      pageSize,
+    };
   }
 
-  async findById(id: number): Promise<Partial<User>> {
+  async findById(id: string): Promise<Partial<User>> {
     const user: Partial<User> = await this._prisma.user.findUnique({
       where: { id, OR: [{ role: Role.Master }, { role: Role.Admin }] },
       select: {
@@ -101,7 +115,11 @@ export class AdminSettingsService {
         status: true,
         fileUrl: true,
         fileKey: true,
-        adminPermissions: true,
+        userPermissions: {
+          include: {
+            permission: true,
+          },
+        },
         createdAt: true,
         updatedAt: true,
       },
@@ -112,14 +130,14 @@ export class AdminSettingsService {
     return user;
   }
 
-  async update(id: number, payload: UpdateAdminDto): Promise<Partial<User>> {
+  async update(id: string, payload: UpdateAdminDto): Promise<Partial<User>> {
     await this.findById(id);
 
     const { name, document, email, phone, password, status, adminPermissions } = payload;
 
-    await HandleUpdateUser.updateUser(id, payload);
+    await handleUpdateUser.updateUser(id, payload);
 
-    if (adminPermissions) await HandleUpdatePermission.update(id, adminPermissions);
+    if (adminPermissions) await handleUpdatePermission.update(id, adminPermissions);
 
     await this._prisma.user.update({
       where: { id },

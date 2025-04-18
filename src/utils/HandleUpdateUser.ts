@@ -5,7 +5,7 @@ import { checkExistingUser } from './checkExistingUser';
 class HandleUpdateUser {
   constructor() {}
 
-  async updateUser(id: number, payload: Partial<User>): Promise<void> {
+  async updateUser(id: string, payload: Partial<User>): Promise<void> {
     const { document, email, phone } = payload;
 
     const checkUserByEmail = await checkExistingUser({ email }, true);
