@@ -6,30 +6,44 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: backend_application
-    command: tail -f /dev/null
+    command: npm run start:dev
     working_dir: /usr/app
     ports:
       - ${PORT}:${PORT}
     env_file:
       - .env
     depends_on:
-      - db
-    links:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - .:/usr/app
+      - /usr/app/node_modules
+    networks:
+      - app-network
 
   db:
-    image: mysql:8.0
-    container_name: database_application
+    image: mongo:4.4
+    container_name: mongodb
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_DATABASE: ${DB_DATABASE}
+      - MONGO_INITDB_ROOT_USERNAME=${DB_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${DB_PASSWORD}
+      - MONGO_INITDB_DATABASE=${DB_DATABASE}
     ports:
-      - ${DB_PORT}:3306
+      - ${DB_PORT}:27017
     volumes:
-      - db_data:/var/lib/mysql
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
 
 volumes:
-  db_data:
+  mongo_data:
     driver: local
+
+networks:
+  app-network:
+    driver: bridge
