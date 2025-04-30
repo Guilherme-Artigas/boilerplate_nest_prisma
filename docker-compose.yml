@@ -14,13 +14,11 @@ services:
       - .env
     depends_on:
       - db
-    links:
-      - db
     volumes:
       - .:/usr/app
 
   db:
-    image: mysql:8.0
+    image: mysql:8.0-debian
     container_name: database_application
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}

@@ -60,6 +60,27 @@ model Text {
   @@map("texts")
 }
 
+model Company {
+  id        Int       @id @default(autoincrement())
+  name      String
+  cnpj      String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[]
+}
+
+model Product {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  price       Float
+  stock       Int
+  companyId   Int
+  company     Company   @relation(fields: [companyId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
 enum Role {
   Master
   Admin

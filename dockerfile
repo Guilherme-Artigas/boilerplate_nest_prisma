@@ -13,6 +13,8 @@ RUN apt-get update && apt-get install -y nano
 # Instala as dependências.
 RUN npm install
 
+RUN npm rebuild bcrypt
+
 # Copia todos os arquivos necessários da aplicação.
 COPY . .
 
