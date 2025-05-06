@@ -1,8 +1,20 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  Query,
+} from '@nestjs/common';
 import { ProductsService } from './products.service';
-import { CreateProductDto } from '../auth/dto/create-product.dto';
-import { UpdateProductDto } from '../auth/dto/update-product.dto';
+import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { ApiOperation } from '@nestjs/swagger';
+import { QueryProductDto } from './dto/query-product.dto';
 
 @Controller('products')
 @UseGuards(JwtAuthGuard)
@@ -15,8 +27,9 @@ export class ProductsController {
   }
 
   @Get()
-  findAll() {
-    return this.productsService.findAll();
+  @ApiOperation({ summary: 'Lista todos os produtos com filtros e paginação.' })
+  async findAll(@Query() query: QueryProductDto) {
+    return this.productsService.findAll(query);
   }
 
   @Get(':id')

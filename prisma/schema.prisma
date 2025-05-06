@@ -24,6 +24,7 @@ model User {
   updatedAt        DateTime          @updatedAt
   adminPermissions AdminPermission[]
   files            File[]
+  companies        Company[]         @relation("CompanyUsers")
 
   @@map("users")
 }
@@ -61,24 +62,31 @@ model Text {
 }
 
 model Company {
-  id        Int       @id @default(autoincrement())
+  id        Int       @id             @default(autoincrement())
   name      String
-  cnpj      String    @unique
+  cnpj      String    @unique         @db.VarChar(18)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   products  Product[]
+  users     User[]    @relation("CompanyUsers")
+
+  @@map("companies")
 }
 
 model Product {
   id          Int       @id @default(autoincrement())
   name        String
-  description String?
+  description String?   @db.VarChar(500)
   price       Float
   stock       Int
   companyId   Int
   company     Company   @relation(fields: [companyId], references: [id])
+  fileUrl     String?   @db.VarChar(1500)
+  fileKey     String?   @db.VarChar(1500)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+
+  @@map("products")
 }
 
 enum Role {

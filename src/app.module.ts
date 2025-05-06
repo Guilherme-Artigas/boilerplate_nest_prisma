@@ -12,6 +12,7 @@ import { AdminModule } from './modules/admin/admin.module';
 import { MobileModule } from './modules/mobile/mobile.module';
 import { WebModule } from './modules/web/web.module';
 import { ProductsModule } from './modules/products/products.module';
+import { CompaniesModule } from './modules/companies/companies.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { ProductsModule } from './modules/products/products.module';
     MobileModule,
     WebModule,
     ProductsModule,
+    CompaniesModule,
   ],
   providers: [
     { provide: APP_GUARD, useClass: ThrottlerGuard },

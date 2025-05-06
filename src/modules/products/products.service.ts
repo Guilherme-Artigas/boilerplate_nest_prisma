@@ -1,7 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../database/PrismaService';
-import { CreateProductDto } from '../auth/dto/create-product.dto';
-import { UpdateProductDto } from '../auth/dto/update-product.dto';
+import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
+import { QueryProductDto } from './dto/query-product.dto';
 
 @Injectable()
 export class ProductsService {
@@ -25,10 +26,27 @@ export class ProductsService {
     });
   }
 
-  async findAll() {
-    return this.prisma.product.findMany({
-      include: { company: true },
-    });
+  async findAll(query: QueryProductDto) {
+    const { name, minPrice, maxPrice, companyId, take = 10, skip = 0 } = query;
+    const where: any = {
+      name: name ? { contains: name, mode: 'insensitive' } : undefined,
+      price: {
+        gte: minPrice,
+        lte: maxPrice,
+      },
+      companyId,
+    };
+    const [products, count] = await Promise.all([
+      this.prisma.product.findMany({
+        where,
+        include: { company: true },
+        take,
+        skip,
+      }),
+      this.prisma.product.count({ where }),
+    ]);
+    const pages = Math.ceil(count / take);
+    return { products, count, pages };
   }
 
   async findOne(id: number) {

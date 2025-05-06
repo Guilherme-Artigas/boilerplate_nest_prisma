@@ -14,14 +14,12 @@ export async function seedAdmin(prisma: PrismaClient) {
     },
   });
 
-  for (const permission of permissions) {
-    await prisma.adminPermission.create({
-      data: {
-        name: permission,
-        admin: { connect: { id: newMaster.id } },
-      },
-    });
-  }
+  await prisma.adminPermission.createMany({
+    data: permissions.map((name) => ({
+      name,
+      admin: { connect: { id: newMaster.id } },
+    })),
+  });
 
   console.log('Admins seed added successfully 🌱.');
 }
