@@ -31,7 +31,7 @@ export class Manager {
     @Column('varchar', { length: 14, nullable: false })
     cpf: string;
 
-    @OneToMany(() => Company, (company) => company.manager, { lazy: true })
+    @OneToMany(() => Company, (company) => company.manager)
     company: Company[];
 
     @CreateDateColumn({ type: 'datetime' })
