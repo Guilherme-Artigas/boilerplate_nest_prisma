@@ -5,6 +5,7 @@ import {
     Column,
     CreateDateColumn,
     ManyToOne,
+    DeleteDateColumn,
 } from 'typeorm';
 
 @Entity('companies')
@@ -15,9 +16,12 @@ export class Company {
     @Column('varchar', { length: 255, nullable: false })
     name: string;
 
-    @ManyToOne(() => Manager, (manager) => manager.company)
+    @ManyToOne(() => Manager, (manager) => manager.company, { lazy: true })
     manager: Manager;
 
     @CreateDateColumn({ type: 'datetime' })
     createdAt: Date;
+
+    @DeleteDateColumn()
+    deletedAt: Date;
 }
