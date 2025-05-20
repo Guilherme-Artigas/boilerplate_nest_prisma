@@ -11,13 +11,13 @@ export class CreateCompanyDto {
             .map(word => word.charAt(0).toUpperCase() + word.slice(1))
             .join(' ');
     })
-    @ApiProperty()
+    @ApiProperty({ example: 'Any Company', description: 'Company name' })
     @IsString()
     @IsNotEmpty()
     @Length(3)
     name: string;
 
-    @ApiProperty()
+    @ApiProperty({ example: '94bd055e-4c0d-4a06-888a-600701e3e9a8', description: 'Manager Id' })
     @IsUUID()
     @IsString()
     @IsNotEmpty()
