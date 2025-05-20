@@ -1,4 +1,5 @@
 import { Manager } from 'src/entities/manager.entity';
+import { Product } from 'src/entities/product.entity';
 import {
     Entity,
     PrimaryGeneratedColumn,
@@ -6,6 +7,7 @@ import {
     CreateDateColumn,
     ManyToOne,
     DeleteDateColumn,
+    OneToMany,
 } from 'typeorm';
 
 @Entity('companies')
@@ -16,8 +18,11 @@ export class Company {
     @Column('varchar', { length: 255, nullable: false })
     name: string;
 
-    @ManyToOne(() => Manager, (manager) => manager.company, { lazy: true })
+    @ManyToOne(() => Manager, (manager) => manager.company)
     manager: Manager;
+
+    @OneToMany(() => Product, (product) => product.company)
+    product: Product[];
 
     @CreateDateColumn({ type: 'datetime' })
     createdAt: Date;
