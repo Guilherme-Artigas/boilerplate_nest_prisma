@@ -50,6 +50,15 @@ Neste projeto:
   - Para isso, use o seguinte comando: `docker compose up -d`
   
   </details>
+
+   <details>
+  <summary>
+    <strong>📄Documentação</strong>
+  </summary><br>
+
+* Após subir a aplicação utilizando o docker, você pode ter acesso a documentação completa acessando a url: http://localhost:3000/api .
+  
+ </details>
   
 <details>
   <summary>
