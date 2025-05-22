@@ -1,7 +1,7 @@
+import type { CreateProductDto } from '@modules/product/dto/create-product.dto';
+import type { UpdateProductDto } from '@modules/product/dto/update-product.dto';
+import { ProductService } from '@modules/product/product.service';
 import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Patch } from '@nestjs/common';
-import { ProductService } from './product.service';
-import type { CreateProductDto } from './dto/create-product.dto';
-import type { UpdateProductDto } from './dto/update-product.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Produtos')

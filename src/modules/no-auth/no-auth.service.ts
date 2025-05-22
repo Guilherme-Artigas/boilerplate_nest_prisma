@@ -6,7 +6,7 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { User } from '@prisma/client';
-import generateCode from '@utils/generateCode';
+import generateCode from '@utils/generate-code';
 import { hashSync } from 'bcrypt';
 import { NewContactDto } from '../mail/dto/new-contact.dto';
 import { MailService } from '../mail/mail.service';

@@ -1,6 +1,6 @@
 import { ConflictException } from '@nestjs/common';
 import { User } from '@prisma/client';
-import { checkExistingUser } from './checkExistingUser';
+import { checkExistingUser } from './check-existing-user';
 
 class HandleUpdateUser {
   constructor() {}

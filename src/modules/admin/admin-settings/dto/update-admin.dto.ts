@@ -11,7 +11,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { IsCpfOrCnpj } from 'src/decorators/isCpfOrCnpj';
+import { IsCpfOrCnpj } from 'src/decorators/is-cpf-or-cnpj';
 
 export class UpdateAdminDto {
   @ApiProperty({ required: false })

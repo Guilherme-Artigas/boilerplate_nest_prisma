@@ -1,9 +1,9 @@
+import type { NewContactDto } from '@modules/mail/dto/new-contact.dto';
 import { Injectable } from '@nestjs/common';
 
 import { ConfigService } from '@nestjs/config';
 
 import * as nodemailer from 'nodemailer';
-import { NewContactDto } from './dto/new-contact.dto';
 
 @Injectable()
 export class MailService {

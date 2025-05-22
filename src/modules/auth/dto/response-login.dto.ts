@@ -1,6 +1,6 @@
+import { PermissionResponseDto } from '@modules/admin/admin-settings/dto/permission-response.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { Role } from '@prisma/client';
-import { PermissionResponseDto } from 'src/modules/admin/admin-settings/dto/permission-response.dto';
 
 export class ResponseLoginDto {
   @ApiProperty({ required: false })

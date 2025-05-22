@@ -1,3 +1,13 @@
+import { AdminSettingsService } from '@modules/admin/admin-settings/admin-settings.service';
+import { CreateAdminAloneDto } from '@modules/admin/admin-settings/dto/create-admin-alone.dto';
+import { CreateAdminResponseDto } from '@modules/admin/admin-settings/dto/create-admin-response.dto';
+import type { CreateAdminDto } from '@modules/admin/admin-settings/dto/create-admin.dto';
+import { PermissionResponseDto } from '@modules/admin/admin-settings/dto/permission-response.dto';
+import type { QueryAdminDto } from '@modules/admin/admin-settings/dto/query-admin.dto';
+import { ResponseFindAllAdminDto } from '@modules/admin/admin-settings/dto/response-find-all-admin.dto';
+import type { UpdateAdminDto } from '@modules/admin/admin-settings/dto/update-admin.dto';
+import { CurrentUser } from '@modules/auth/decorators/current-user.decorator';
+import { IsPublic } from '@modules/auth/decorators/is-public.decorator';
 import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Query } from '@nestjs/common';
 
 import {
@@ -11,17 +21,7 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { AdminPermission, User } from '@prisma/client';
-import handleAccessControl from '@utils/HandleAccessControl';
-import { CurrentUser } from 'src/modules/auth/decorators/current-user.decorator';
-import { IsPublic } from 'src/modules/auth/decorators/is-public.decorator';
-import { AdminSettingsService } from './admin-settings.service';
-import { CreateAdminAloneDto } from './dto/create-admin-alone.dto';
-import { CreateAdminResponseDto } from './dto/create-admin-response.dto';
-import { CreateAdminDto } from './dto/create-admin.dto';
-import { PermissionResponseDto } from './dto/permission-response.dto';
-import { QueryAdminDto } from './dto/query-admin.dto';
-import { ResponseFindAllAdminDto } from './dto/response-find-all-admin.dto';
-import { UpdateAdminDto } from './dto/update-admin.dto';
+import handleAccessControl from '@utils/handle-access-control';
 
 @ApiTags('Configurações - Portal Gerencial')
 @Controller('admin-settings')

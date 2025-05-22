@@ -1,7 +1,7 @@
 import { PrismaService } from '@database/PrismaService';
+import type { CreateResponsibleDto } from '@modules/responsible/dto/create-responsible.dto';
+import type { UpdateResponsibleDto } from '@modules/responsible/dto/update-responsible.dto';
 import { Injectable } from '@nestjs/common';
-import type { UpdateResponsibleDto } from './dto/update-responsible.dto';
-import type { CreateResponsibleDto } from 'src/modules/responsible/dto/create-responsible.dto';
 
 @Injectable()
 export class ResponsibleService {

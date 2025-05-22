@@ -1,3 +1,9 @@
+import { AuthService } from '@modules/auth/auth.service';
+import { IsPublic } from '@modules/auth/decorators/is-public.decorator';
+import { LoginUserDto } from '@modules/auth/dto/login-user.dto';
+import { ResponseLoginDto } from '@modules/auth/dto/response-login.dto';
+import { LocalAuthGuard } from '@modules/auth/guards/local-auth.guard';
+import type { AuthRequest } from '@modules/auth/models/AuthRequest';
 import { Controller, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -7,12 +13,6 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { AuthService } from './auth.service';
-import { IsPublic } from './decorators/is-public.decorator';
-import { LoginUserDto } from './dto/login-user.dto';
-import { ResponseLoginDto } from './dto/response-login.dto';
-import { LocalAuthGuard } from './guards/local-auth.guard';
-import { AuthRequest } from './models/AuthRequest';
 
 @ApiTags('Autenticação')
 @Controller()

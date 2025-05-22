@@ -1,6 +1,11 @@
 import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { IfileEntity } from '@interfaces/entities/Ifile.entity';
 import { ImessageEntity } from '@interfaces/entities/Imessage.entity';
+import { IsPublic } from '@modules/auth/decorators/is-public.decorator';
+import type { DeleteOneFileDto } from '@modules/upload/dto/delete-one-file.dto';
+import { ResponseDeleteOneFileDto } from '@modules/upload/dto/response-delete-one-file.dto';
+import { ResponseOneFileDto } from '@modules/upload/dto/response-one-file.dto';
+import { UploadService } from '@modules/upload/upload.service';
 import {
   Controller,
   Delete,
@@ -30,11 +35,6 @@ import {
 } from '@nestjs/swagger';
 import { Response } from 'express';
 import { Readable } from 'stream';
-import { IsPublic } from '../auth/decorators/is-public.decorator';
-import { DeleteOneFileDto } from './dto/delete-one-file.dto';
-import { ResponseDeleteOneFileDto } from './dto/response-delete-one-file.dto';
-import { ResponseOneFileDto } from './dto/response-one-file.dto';
-import { UploadService } from './upload.service';
 
 @ApiTags('Upload de arquivos')
 @Controller()

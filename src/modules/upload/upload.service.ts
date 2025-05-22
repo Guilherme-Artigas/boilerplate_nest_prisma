@@ -7,11 +7,11 @@ import {
   S3Client,
 } from '@aws-sdk/client-s3';
 import { PrismaService } from '@database/PrismaService';
+import type { ResponseDeleteOneFileDto } from '@modules/upload/dto/response-delete-one-file.dto';
+import type { ResponseOneFileDto } from '@modules/upload/dto/response-one-file.dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { File, User } from '@prisma/client';
-import { ResponseDeleteOneFileDto } from './dto/response-delete-one-file.dto';
-import { ResponseOneFileDto } from './dto/response-one-file.dto';
 
 @Injectable()
 export class UploadService {

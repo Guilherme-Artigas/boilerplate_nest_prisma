@@ -1,7 +1,7 @@
 import { PrismaService } from '@database/PrismaService';
+import type { CreateProductDto } from '@modules/product/dto/create-product.dto';
+import type { UpdateProductDto } from '@modules/product/dto/update-product.dto';
 import { Injectable } from '@nestjs/common';
-import { UpdateProductDto } from './dto/update-product.dto';
-import type { CreateProductDto } from 'src/modules/product/dto/create-product.dto';
 
 @Injectable()
 export class ProductService {

@@ -1,7 +1,7 @@
+import type { CreateResponsibleDto } from '@modules/responsible/dto/create-responsible.dto';
+import type { UpdateResponsibleDto } from '@modules/responsible/dto/update-responsible.dto';
+import { ResponsibleService } from '@modules/responsible/responsible.service';
 import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Patch } from '@nestjs/common';
-import { ResponsibleService } from './responsible.service';
-import type { CreateResponsibleDto } from './dto/create-responsible.dto';
-import type { UpdateResponsibleDto } from './dto/update-responsible.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Responsáveis')

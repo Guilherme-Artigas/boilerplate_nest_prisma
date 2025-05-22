@@ -1,6 +1,6 @@
+import { IsCnpj } from '@decorators/is-cnpj';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsOptional, IsString, MaxLength } from 'class-validator';
-import { IsCnpj } from 'src/decorators/isCnpj';
 
 export class UpdateCompanyDto {
   @ApiPropertyOptional({ example: 'My Company Ltda' })

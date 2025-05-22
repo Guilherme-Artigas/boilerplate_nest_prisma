@@ -1,10 +1,10 @@
+import type { UserPayload } from '@modules/auth/models/UserPayload';
+import type { UserToken } from '@modules/auth/models/UserToken';
+import { LoginService } from '@modules/login/login.service';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Status, User } from '@prisma/client';
 import { compareSync } from 'bcrypt';
-import { LoginService } from '../login/login.service';
-import { UserPayload } from './models/UserPayload';
-import { UserToken } from './models/UserToken';
 
 @Injectable()
 export class AuthService {

@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 
-import { AdminSettingsController } from './admin-settings/admin-settings.controller';
-import { AdminSettingsService } from './admin-settings/admin-settings.service';
 import { DatabaseModule } from '@database/database.module';
+import { AdminSettingsController } from '@modules/admin/admin-settings/admin-settings.controller';
+import { AdminSettingsService } from '@modules/admin/admin-settings/admin-settings.service';
 
 @Module({
   imports: [DatabaseModule],

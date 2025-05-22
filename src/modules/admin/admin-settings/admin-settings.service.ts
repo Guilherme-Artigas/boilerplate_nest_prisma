@@ -2,16 +2,16 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { PrismaService } from '@database/PrismaService';
 import { AdminPermission, Role, Status, User } from '@prisma/client';
-import capitalizeFirstLetter from '@utils/capitalizeFirstLetter';
-import { checkExistingUser } from '@utils/checkExistingUser';
-import HandleUpdatePermission from '@utils/HandleUpdatePermission';
-import HandleUpdateUser from '@utils/HandleUpdateUser';
 import { hashSync } from 'bcrypt';
-import { CreateAdminResponseDto } from './dto/create-admin-response.dto';
-import { CreateAdminDto } from './dto/create-admin.dto';
-import { QueryAdminDto } from './dto/query-admin.dto';
-import { ResponseFindAllAdminDto } from './dto/response-find-all-admin.dto';
-import { UpdateAdminDto } from './dto/update-admin.dto';
+import { checkExistingUser } from '@utils/check-existing-user';
+import capitalizeFirstLetter from '@utils/capitalize-first-letter';
+import handleUpdateUser from '@utils/handle-update-user';
+import handleUpdatePermission from '@utils/handle-update-permission';
+import type { CreateAdminDto } from '@modules/admin/admin-settings/dto/create-admin.dto';
+import type { CreateAdminResponseDto } from '@modules/admin/admin-settings/dto/create-admin-response.dto';
+import type { QueryAdminDto } from '@modules/admin/admin-settings/dto/query-admin.dto';
+import type { ResponseFindAllAdminDto } from '@modules/admin/admin-settings/dto/response-find-all-admin.dto';
+import type { UpdateAdminDto } from '@modules/admin/admin-settings/dto/update-admin.dto';
 
 @Injectable()
 export class AdminSettingsService {
@@ -117,9 +117,9 @@ export class AdminSettingsService {
 
     const { name, document, email, phone, password, status, adminPermissions } = payload;
 
-    await HandleUpdateUser.updateUser(id, payload);
+    await handleUpdateUser.updateUser(id, payload);
 
-    if (adminPermissions) await HandleUpdatePermission.update(id, adminPermissions);
+    if (adminPermissions) await handleUpdatePermission.update(id, adminPermissions);
 
     await this._prisma.user.update({
       where: { id },
