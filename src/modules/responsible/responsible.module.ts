@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { ResponsibleController } from './responsible.controller';
-import { ResponsibleService } from './responsible.service';
-import { PrismaModule } from '@database/prisma.module';
+import { DatabaseModule } from '@database/database.module';
+import { ResponsibleController } from '@modules/responsible/responsible.controller';
+import { ResponsibleService } from '@modules/responsible/responsible.service';
 
 @Module({
-  imports: [PrismaModule],
+  imports: [DatabaseModule],
   controllers: [ResponsibleController],
   providers: [ResponsibleService],
 })

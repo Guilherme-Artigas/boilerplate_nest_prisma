@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { NoAuthService } from './no-auth.service';
 import { NoAuthController } from './no-auth.controller';
 import { MailService } from '../mail/mail.service';
-import { PrismaModule } from '@database/prisma.module';
+import { DatabaseModule } from '@database/database.module';
 
 @Module({
-  imports: [PrismaModule],
+  imports: [DatabaseModule],
   controllers: [NoAuthController],
   providers: [NoAuthService, MailService],
 })

@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 
 import { AdminSettingsController } from './admin-settings/admin-settings.controller';
 import { AdminSettingsService } from './admin-settings/admin-settings.service';
-import { PrismaModule } from '@database/prisma.module';
+import { DatabaseModule } from '@database/database.module';
 
 @Module({
-  imports: [PrismaModule],
+  imports: [DatabaseModule],
   controllers: [AdminSettingsController],
   providers: [AdminSettingsService],
 })
