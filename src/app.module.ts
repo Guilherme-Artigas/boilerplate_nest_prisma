@@ -4,7 +4,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { LoginModule } from './modules/login/login.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './modules/auth/guards/jwt-auth.guard';
-import { UploadModule } from './modules/upload/upload.module';
+// import { UploadModule } from './modules/upload/upload.module';
 import { ConfigModule } from '@nestjs/config';
 import { MailModule } from './modules/mail/mail.module';
 import { NoAuthModule } from './modules/no-auth/no-auth.module';
@@ -23,7 +23,7 @@ import { WebModule } from './modules/web/web.module';
     ConfigModule.forRoot({ isGlobal: true }),
     AuthModule,
     LoginModule,
-    UploadModule,
+    // UploadModule,
     MailModule,
     NoAuthModule,
     AdminModule,
