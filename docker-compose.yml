@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   app:
     build:
@@ -25,6 +23,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}
+    env_file:
+      - .env
     ports:
       - ${DB_PORT}:3306
     volumes:

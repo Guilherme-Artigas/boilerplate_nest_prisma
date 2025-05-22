@@ -23,4 +23,4 @@ RUN npx prisma generate
 RUN npm run build
 
 # Porta que o app é executado.
-EXPOSE 3000
+EXPOSE 3333
