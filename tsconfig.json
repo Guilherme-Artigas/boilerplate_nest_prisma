@@ -29,6 +29,12 @@
       ],
       "@utils/*": [
         "./src/utils/*"
+      ],
+      "@modules/*": [
+        "./src/modules/*"
+      ],
+      "@decorators/*": [
+        "./src/decorators/*"
       ]
     }
   }
