@@ -43,7 +43,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
 
   if (process.env.ACTIVATE_SWAGGER === 'YES') {
-    SwaggerModule.setup('docs', app, document);
+    SwaggerModule.setup('/v1/docs', app, document);
   }
 
   app.useGlobalPipes(new ValidationPipe());
