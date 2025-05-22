@@ -17,30 +17,36 @@ model Company {
 
   products     Product[]
   responsibles Responsible[]
+
+  @@map("companies")
 }
 
 model Product {
   id          Int      @id @default(autoincrement())
   name        String
-  description String
+  description String?
   price       Decimal  @db.Decimal(10, 2)
   companyId   Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   company Company @relation(fields: [companyId], references: [id])
+
+  @@map("products")
 }
 
 model Responsible {
   id        Int      @id @default(autoincrement())
   name      String
   email     String   @unique
-  phone     String
+  phone     String?
   companyId Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   company Company @relation(fields: [companyId], references: [id])
+
+  @@map("responsibles")
 }
 
 model User {
