@@ -2,6 +2,7 @@ services:
   app:
     build: .
     container_name: backend_application
+    command: 'tail -f /dev/null'
     ports:
       - ${PORT}:${PORT}
     env_file:
