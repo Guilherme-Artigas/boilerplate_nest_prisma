@@ -26,11 +26,11 @@ model Product {
   name        String
   description String?
   price       Decimal  @db.Decimal(10, 2)
-  companyId   Int
+  companyId   Int?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  company Company @relation(fields: [companyId], references: [id])
+  company Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
 
   @@map("products")
 }
@@ -40,11 +40,11 @@ model Responsible {
   name      String
   email     String   @unique
   phone     String?
-  companyId Int
+  companyId Int?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  company Company @relation(fields: [companyId], references: [id])
+  company Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
 
   @@map("responsibles")
 }
