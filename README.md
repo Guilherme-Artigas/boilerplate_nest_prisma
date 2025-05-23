@@ -2,11 +2,21 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
-## Descrição
+## Funcionalidades Implementadas
 
-Esse template ultiliza [NestJS](https://nestjs.com/) para a construção de um Back-end organizado, estruturado e escalável para grandes projetos, juntamente com [Prisma](https://www.prisma.io/) para as interações com banco de dados.
+1. CRUD completo para as entidades: Empresas (Company), Produtos (Product), Responsáveis (Responsible)
 
-...
+2. Documentação da API no Swagger, detalhando: Todos os endpoints (create, read, update, delete), possíveis respostas e erros de cada rota, contratos de entrada e saída (DTOs), validação de dados robusta com class-validator e uso de DTOs para garantir segurança e integridade dos dados recebidos, DTOs de resposta (Response DTOs) para padronizar e proteger o contrato exposto ao consumidor da API.
+
+3. Paginação nos endpoints de listagem (GET /products, GET /companies, GET /responsibles) para garantir performance e usabilidade mesmo com grandes volumes de dados.
+
+4. Conversão de tipos do Prisma (Decimal → number) nas respostas da API para manter o contrato limpo e alinhado com o padrão OpenAPI.
+
+5. Padronização dos arquivos em kebab-case para melhor organização e legibilidade.
+
+6. Centralização da integração com o banco de dados através do DatabaseModule, garantindo uma única conexão do Prisma com o banco (evita múltiplas instâncias e facilita manutenção).
+
+7. Verificação de existência de entidades relacionadas antes de criar ou atualizar registros (ex: só permite criar produto se a empresa existir), prevenindo erros de integridade e melhorando a experiência do usuário.
 
 ## Instalação
 
