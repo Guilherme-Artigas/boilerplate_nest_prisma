@@ -36,7 +36,7 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-**Rodar via Docker Compose**
+**Rodar via Docker Compose em DEV**
 
 ```bash
 # Comentar a variável de ambiente na .env que se refere a rodar local.
@@ -44,7 +44,7 @@ $ npm run start:prod
 DATABASE_URL=mysql://<user>:<password>@<host>:<db_port>/<db_name>
 
 # Subir os containers.
-$ docker-compose up -d
+$ docker-compose -f docker-compose.dev.yml up -d
 
 # Acessar o container.
 $ docker exec -it backend_application bash
@@ -57,9 +57,6 @@ $ npm run seed
 
 # Comando para rodar em desenvolvimento (já executa o build).
 $ npm run start:dev
-
-# Comando para rodar em produção (já executa o build).
-$ npm run start:prod
 ```
 
 ## Test
