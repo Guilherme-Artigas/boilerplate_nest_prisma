@@ -27,7 +27,7 @@ async function bootstrap() {
   app.setGlobalPrefix('/v1');
 
   const config = new DocumentBuilder()
-    .setTitle('Documentação da API Projeto X.')
+    .setTitle('Documentação da API Tech Challenge CroSoften.')
     .setDescription('Essa API foi construída usando NestJS na versão 10.0')
     .setVersion('1.0')
     .addTag('Autenticação')
@@ -37,6 +37,7 @@ async function bootstrap() {
     .addTag('My Self')
     .addServer(`${process.env.HOST}:${process.env.PORT}`, 'Testes locais.')
     .addServer(`${process.env.URL_INTEGRATION}`, 'Testes de integrações.')
+    .addServer(`${process.env.PROD_HOST}`, 'Ambiente de Produção.')
     .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'bearerAuth')
     .build();
 
