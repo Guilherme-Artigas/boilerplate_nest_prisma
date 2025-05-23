@@ -18,6 +18,14 @@
 
 7. Verificação de existência de entidades relacionadas antes de criar ou atualizar registros (ex: só permite criar produto se a empresa existir), prevenindo erros de integridade e melhorando a experiência do usuário.
 
+## Deploy URL
+
+https://tech-challenge-crosoften.fly.dev/
+
+### Documentação (Selecione o servidor de produção):
+
+https://tech-challenge-crosoften.fly.dev/v1/docs
+
 ## Instalação
 
 ```bash
