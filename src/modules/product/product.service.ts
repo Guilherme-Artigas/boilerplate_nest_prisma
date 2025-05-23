@@ -77,12 +77,14 @@ export class ProductService {
       throw new NotFoundException('Produto não encontrado');
     }
 
-    const companyExists = await this.prisma.company.findUnique({
-      where: { id: dto.companyId },
-    });
+    if (dto.companyId) {
+      const companyExists = await this.prisma.company.findUnique({
+        where: { id: dto.companyId },
+      });
 
-    if (!companyExists) {
-      throw new NotFoundException('Empresa informada não encontrada.');
+      if (!companyExists) {
+        throw new NotFoundException('Empresa informada não encontrada.');
+      }
     }
 
     const data = {
